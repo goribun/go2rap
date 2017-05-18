@@ -6,7 +6,6 @@ import (
 	"strings"
 	"net/url"
 	"log"
-	"io/ioutil"
 )
 
 type HandleProxy struct {
@@ -38,10 +37,7 @@ func (h *HandleProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method == "POST" {
-		x, _ := ioutil.ReadAll(r.Body)
-
-		log.Printf("method: %v param:%v", r.Method, []byte(x))
-
+		log.Printf("method: %v", r.Method)
 	}
 
 	proxy := &httputil.ReverseProxy{
