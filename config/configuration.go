@@ -7,7 +7,7 @@ import (
 
 //配置文件结构
 type CfgJson struct {
-	Servers   []Server
+	Servers    []Server
 	Conditions []Condition
 }
 
@@ -22,7 +22,9 @@ type Server struct {
 type Condition struct {
 	ServerA string
 	ServerB string
-	Path    []string
+	//rap(mock平台)前缀路径，例如：/mockjsdata/1
+	PrefixPath string
+	Path       []string
 }
 
 //读取并解析配置文件

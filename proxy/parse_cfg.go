@@ -2,6 +2,7 @@ package proxy
 
 import (
 	"go2rap/config"
+	"fmt"
 )
 
 //根据配置信息拿到易于程序处理的数据类型
@@ -31,8 +32,10 @@ func getParsedCfg() (map[string]string, map[string]ServerB) {
 
 		//条件中存在该server
 		if okA && okB {
+			fmt.Println("PrefixPath:" + x.PrefixPath)
+
 			ipB := serverMap[hostB]
-			serverBMap[hostA] = ServerB{host: hostB, ip: ipB, paths: x.Path}
+			serverBMap[hostA] = ServerB{host: hostB, ip: ipB, prefixPath: x.PrefixPath, paths: x.Path}
 		}
 	}
 
@@ -41,7 +44,8 @@ func getParsedCfg() (map[string]string, map[string]ServerB) {
 
 //配置文件结构
 type ServerB struct {
-	host  string
-	ip    string
-	paths []string
+	host       string
+	ip         string
+	prefixPath string
+	paths      []string
 }
