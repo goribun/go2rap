@@ -4,8 +4,9 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"strings"
-	"fmt"
 	"net/url"
+	"log"
+	"io/ioutil"
 )
 
 type HandleProxy struct {
@@ -16,16 +17,32 @@ func (h *HandleProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	host, ip, prefixPath := handleCfgAndServer(r.Host, r.URL.Path)
 
-	//配置文件中不存在该host
+	//配置文件中不存在该host，转到欢迎页
 	if host == "" {
-		fmt.Println(fmt.Sprintf("host:%v does not exist in the configuration file", r.Host))
+		w.Write([]byte("<h1>Welcome to go2rap!</h1>"))
+		log.Printf("host:%v does not exist in the configuration file", r.Host)
 		return
 	}
 
-	remote, _ := url.Parse("http://" + host)
+	remote, err := url.Parse("http://" + host)
 
-	fmt.Println(host + "###" + ip)
-	fmt.Println("Scheme:" + remote.Scheme + "   Path:" + prefixPath + singleJoiningSlash(remote.Path, r.URL.Path))
+	if err != nil {
+		log.Fatalln("Parse url", err)
+	}
+
+	log.Println("request:" + host + prefixPath + singleJoiningSlash(remote.Path, r.URL.Path))
+
+	if r.Method == "GET" {
+		log.Printf("method: %v param:%v", r.Method, r.URL.Query().Encode())
+		log.Println()
+	}
+
+	if r.Method == "POST" {
+		x, _ := ioutil.ReadAll(r.Body)
+
+		log.Printf("method: %v param:%v", r.Method, []byte(x))
+
+	}
 
 	proxy := &httputil.ReverseProxy{
 		Director: func(req *http.Request) {
@@ -71,8 +88,7 @@ func handleCfgAndServer(host string, path string) (string, string, string) {
 				//如果条件符合
 				if strings.Contains(path, x) {
 					//打印命中条件的转发
-					fmt.Println(fmt.Sprintf("hit conditions：to host:%v", serverB.host))
-
+					log.Printf("hit conditions：to host:%v", serverB.host)
 					return serverB.host, serverB.ip, serverB.prefixPath
 				}
 			}
@@ -80,5 +96,4 @@ func handleCfgAndServer(host string, path string) (string, string, string) {
 		return host, ip, ""
 	}
 	return "", "", ""
-
 }

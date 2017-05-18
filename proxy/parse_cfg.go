@@ -2,15 +2,15 @@ package proxy
 
 import (
 	"go2rap/config"
-	"fmt"
+	"log"
 )
 
 //根据配置信息拿到易于程序处理的数据类型
 func getParsedCfg() (map[string]string, map[string]ServerB) {
-	cfgJson, error := config.ReadCfg("go2rap.json")
+	cfgJson, err := config.ReadCfg("go2rap.json")
 
-	if error != nil {
-
+	if err != nil {
+		log.Fatalln("Read go2rap.json", err)
 	}
 
 	//服务器Map，key=host，value=proxy
@@ -32,8 +32,6 @@ func getParsedCfg() (map[string]string, map[string]ServerB) {
 
 		//条件中存在该server
 		if okA && okB {
-			fmt.Println("PrefixPath:" + x.PrefixPath)
-
 			ipB := serverMap[hostB]
 			serverBMap[hostA] = ServerB{host: hostB, ip: ipB, prefixPath: x.PrefixPath, paths: x.Path}
 		}

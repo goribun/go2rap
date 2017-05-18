@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 	"go2rap/proxy"
-	"fmt"
 )
 
 func main() {
@@ -14,7 +13,7 @@ func main() {
 //启动服务
 func startServer() {
 
-	fmt.Println("starting server...")
+	log.Println("starting server...")
 	//反向代理处理器
 	h := &proxy.HandleProxy{}
 	//监听80端口

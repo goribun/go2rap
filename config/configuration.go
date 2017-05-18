@@ -29,16 +29,15 @@ type Condition struct {
 
 //读取并解析配置文件
 func ReadCfg(filename string) (*CfgJson, error) {
+
 	bytes, err := ioutil.ReadFile(filename)
 	if err != nil {
-		//fmt.Println("ReadFile: ", err.Error()) TODO log
 		return nil, err
 	}
 
 	var cfgJson CfgJson
 
 	if err := json.Unmarshal(bytes, &cfgJson); err != nil {
-		//fmt.Println("Unmarshal: ", err.Error()) TODO log
 		return nil, err
 	}
 
