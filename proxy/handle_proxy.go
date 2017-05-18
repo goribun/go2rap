@@ -13,8 +13,14 @@ type HandleProxy struct {
 
 //实现Handler的接口
 func (h *HandleProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	
+
 	host, ip, prefixPath := handleCfgAndServer(r.Host, r.URL.Path)
+
+	//配置文件中不存在该host
+	if host == "" {
+		fmt.Println(fmt.Sprintf("host:%v does not exist in the configuration file", r.Host))
+		return
+	}
 
 	remote, _ := url.Parse("http://" + host)
 
@@ -59,17 +65,20 @@ func handleCfgAndServer(host string, path string) (string, string, string) {
 	ip, okHost := serverMap[host]
 	serverB, okCondition := serverBMap[host]
 
-	if okHost && okCondition {
-		for _, x := range serverB.paths {
-			//如果条件符合
-			if strings.Contains(path, x) {
-				//打印命中条件的转发
-				fmt.Println(fmt.Sprintf("hit conditions：to host:%v", serverB.host))
+	if okHost {
+		if okCondition {
+			for _, x := range serverB.paths {
+				//如果条件符合
+				if strings.Contains(path, x) {
+					//打印命中条件的转发
+					fmt.Println(fmt.Sprintf("hit conditions：to host:%v", serverB.host))
 
-				return serverB.host, serverB.ip, serverB.prefixPath
+					return serverB.host, serverB.ip, serverB.prefixPath
+				}
 			}
 		}
-		return host, ip, "";
+		return host, ip, ""
 	}
 	return "", "", ""
+
 }
