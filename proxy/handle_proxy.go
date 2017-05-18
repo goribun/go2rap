@@ -13,9 +13,7 @@ type HandleProxy struct {
 
 //实现Handler的接口
 func (h *HandleProxy) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-
-	//remote, _ := url.Parse("http://" + h.host)
-
+	
 	host, ip, prefixPath := handleCfgAndServer(r.Host, r.URL.Path)
 
 	remote, _ := url.Parse("http://" + host)
