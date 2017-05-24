@@ -30,8 +30,8 @@ go2rap通过简单的反向代理功能解决了mock时的代码入侵：
   servers部分配置需要代理的服务，name为名称，host为域名，proxy为服务的ip；如果只作为反向代理，只配置该部分即可
 
 
-  ```json
-  ""servers": [
+```json
+ "servers": [
       {
         "name": "test-user-api",
         "host": "test.user.api.lq.wangxs.cn",
@@ -64,11 +64,11 @@ go2rap通过简单的反向代理功能解决了mock时的代码入侵：
         "proxy": "127.0.0.1:8080"
       }
     ]
-  ```
+```
   
- condition部分，用来配置路径条件，其中serverA为实际api的server name（server部分配置的name），serverB为mock平台的server name，prefixPath用来指定路径前缀，因为可能多个接口项目都使用同一个mock平台，使用一个前缀路径区分；path就是配置路径条件了，可以指定多个，当调用的路径包含在path时就会请求serverB也就是RAP平台。
+condition部分，用来配置路径条件，其中serverA为实际api的server name（server部分配置的name），serverB为mock平台的server name，prefixPath用来指定路径前缀，因为可能多个接口项目都使用同一个mock平台，使用一个前缀路径区分；path就是配置路径条件了，可以指定多个，当调用的路径包含在path时就会请求serverB也就是RAP平台。
  
- ```json
+```json
   "conditions": [
     {
       "serverA": "test-user-api",
@@ -87,7 +87,7 @@ go2rap通过简单的反向代理功能解决了mock时的代码入侵：
       ]
     }
   ]
- ```
+```
 
 
 
