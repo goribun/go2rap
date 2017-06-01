@@ -35,33 +35,33 @@ go2rap通过简单的反向代理功能解决了mock时的代码入侵：
       {
         "name": "test-user-api",
         "host": "test.user.api.lq.wangxs.cn",
-        "proxy": "192.168.100.1"
+        "proxy": "xxx.xxx.xxx.xxx"
       },
       {
         "name": "rap-user-api",
         "host": "rap.user.api.lq.wangxs.cn",
-        "proxy": "192.168.128.6"
+        "proxy": "yyy.yyy.yyy.yyy"
       },
       {
         "name": "local-user-web",
         "host": "local.user.wangxs.cn",
-        "proxy": "127.0.0.1:8080"
+        "proxy": "zzz.zzz.zzz.zzz:8080"
       }
     ]": [
       {
         "name": "test-user-api",
         "host": "test.user.api.lq.wangxs.cn",
-        "proxy": "192.168.100.1"
+        "proxy": "nnn.nnn.nnn.nnn"
       },
       {
         "name": "rap-user-api",
         "host": "rap.user.api.lq.wangxs.cn",
-        "proxy": "192.168.128.6"
+        "proxy": "mmm.mmm.mmm.mmm"
       },
       {
         "name": "local-user-web",
         "host": "local.user.wangxs.cn",
-        "proxy": "127.0.0.1:8080"
+        "proxy": "ppp.ppp.ppp.ppp:8080"
       }
     ]
 ```
