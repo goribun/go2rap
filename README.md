@@ -35,7 +35,7 @@ go2rap通过简单的反向代理功能解决了mock时的代码入侵：
       {
         "name": "test-user-api",
         "host": "test.user.api.lq.wangxs.cn",
-        "proxy": "xxx.xxx.xxx.xxx"
+        "proxy": "xxx.xxx.xxx.xxx"
       },
       {
         "name": "rap-user-api",
